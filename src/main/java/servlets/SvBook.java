@@ -17,7 +17,6 @@ import java.util.List;
 @WebServlet(name = "bookList", urlPatterns = "/bookList")
 public class SvBook extends HttpServlet {
     BookService bookService;
-    String msg = "";
 
     public SvBook() {
         bookService = new BookService();
@@ -25,11 +24,11 @@ public class SvBook extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
+        HttpSession session = request.getSession();
 
         if(action == null) {
             try {
                 List<Book> bookList = bookService.getAllBooks();
-                HttpSession session = request.getSession();
                 session.setAttribute("bookList", bookList);
 
                 request.getRequestDispatcher("bookList.jsp").forward(request, response);
@@ -42,7 +41,6 @@ public class SvBook extends HttpServlet {
 
             try {
                 Book book = bookService.getBookByIsbn(isbn);
-                HttpSession session = request.getSession();
                 session.setAttribute("bookByIsbn", book);
 
                 response.sendRedirect("card.jsp");
@@ -80,9 +78,6 @@ public class SvBook extends HttpServlet {
 
                 try {
                     bookService.registerBook(title, isbn, year, quantity, registration);
-
-                    msg = "It was saved successfully";
-                    session.setAttribute("msg", msg);
                     response.sendRedirect("bookList");
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
@@ -94,9 +89,6 @@ public class SvBook extends HttpServlet {
 
                 try {
                     bookService.deleteBook(id);
-
-                    msg = "It was deleted successfully";
-                    session.setAttribute("msg", msg);
                     response.sendRedirect("bookList");
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
@@ -116,9 +108,6 @@ public class SvBook extends HttpServlet {
                     book.setPublisherRegistration(request.getParameter("publisherRegistration").equals("Yes"));
 
                     bookService.updateBook(book);
-
-                    msg = "It was updated successfully!";
-                    session.setAttribute("msg", msg);
                     response.sendRedirect("bookList");
                 } catch (Exception e) {
                     System.out.println(e.getMessage());

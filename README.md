@@ -1,6 +1,6 @@
 # Book App
 
-####Java, Sqlite, JPA, JSP and Maven. 
+#### Java, Sqlite, JPA, JSP and Maven. 
 Developed by:
 
 - María Gabriela Alarcón.

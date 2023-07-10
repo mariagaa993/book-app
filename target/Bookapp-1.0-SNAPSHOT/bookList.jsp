@@ -228,11 +228,10 @@
             });
         });
 
-        <% String message = (String) request.getSession().getAttribute("msg");
-        if(message != null) { %>
-            alert('<%= message %>');
-            <%
-        }; %>
+        /* String message = (String) request.getSession().getAttribute("msg")
+        if(message != null) {
+            alert(message);
+        }*/
     </script>
 </body>
 </html>
